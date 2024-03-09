@@ -3,12 +3,11 @@ class producto {
    constructor(nombre,precio){
     this.nombre = nombre,
     this.precio = precio
-   
    }
 
 }
 
-const producto1 = new producto("Zapatillas Nike",135000,)
+const producto1 = new producto("Zapatillas Nike",135000)
 
 const producto2 = new producto("Buzo Adidas",50000)
 
@@ -23,10 +22,18 @@ const producto6 = new producto("NBA Retro",300000)
 
 const misProductos = [producto1,producto2,producto3,producto4,producto5,producto6]
 
+const imagenes = [
+    "imagenes/zapatillasnike.png",
+    "imagenes/buzoadidas.png",
+    "imagenes/pantalonpuma.png",
+    "imagenes/ojotasreebok.png",
+    "imagenes/pelotabasquet.png",
+    "imagenes/camperanba.png"
 
+]
 const contenedorCards = document.querySelector(".contenedor-de-cards")
 
-
+let contador = 0
 
 misProductos.forEach((element)=>{
 
@@ -34,9 +41,15 @@ misProductos.forEach((element)=>{
     const cards = document.createElement("div")
     cards.classList.add("cards")
 
+    const cardsContenedorImagen = document.createElement("div")
+    cardsContenedorImagen.classList.add("cards-contenedor-imagen")
+    cardsContenedorImagen.innerHTML = `
     
-    
-    
+    <img class="cards-imagen" src="${imagenes[contador]}" alt="">
+
+
+    `
+    contador++
     const cardsBody = document.createElement("div")
     cardsBody.classList.add("cards-body")
     cardsBody.innerHTML = `
@@ -58,7 +71,7 @@ misProductos.forEach((element)=>{
     
     `
 
-    
+    cards.appendChild(cardsContenedorImagen)
     cards.appendChild(cardsBody)
     cards.appendChild(cardsContenedorButton)
     contenedorCards.appendChild(cards)
