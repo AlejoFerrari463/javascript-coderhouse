@@ -1,508 +1,455 @@
-/* CREANDO CARDS */
-class producto {
-   constructor(nombre,precio){
-    this.nombre = nombre,
-    this.precio = precio
-   }
+// /* CREANDO CARDS */
+// class producto {
+//    constructor(nombre,precio){
+//     this.nombre = nombre,
+//     this.precio = precio
+//    }
 
-}
+// }
 
-const producto1 = new producto("Zapatillas Nike",135000)
+// const producto1 = new producto("Zapatillas Nike",135000)
 
-const producto2 = new producto("Buzo Adidas",50000)
+// const producto2 = new producto("Buzo Adidas",50000)
 
-const producto3 = new producto("Pantalon Puma",15000)
+// const producto3 = new producto("Pantalon Puma",15000)
 
-const producto4 = new producto("Ojotas Reebok",5000)
+// const producto4 = new producto("Ojotas Reebok",5000)
 
-const producto5 = new producto("Pelota Spalding",45000)
+// const producto5 = new producto("Pelota Spalding",45000)
 
-const producto6 = new producto("NBA Retro",300000)
+// const producto6 = new producto("NBA Retro",300000)
+
+// const misProductos = [producto1,producto2,producto3,producto4,producto5,producto6]
+
+// const imagenes = [
+//     "imagenes/zapatillasnike.png",
+//     "imagenes/buzoadidas.png",
+//     "imagenes/pantalonpuma.png",
+//     "imagenes/ojotasreebok.png",
+//     "imagenes/pelotabasquet.png",
+//     "imagenes/camperanba.png"
+// ]
+
+// misProductos.forEach((element)=>{
+
+//     const cards = document.createElement("div")
+//     cards.classList.add("cards")
+
+//     const cardsContenedorImagen = document.createElement("div")
+//     cardsContenedorImagen.classList.add("cards-contenedor-imagen")
+//     cardsContenedorImagen.innerHTML = `
+
+//     <img class="cards-imagen" src="${imagenes[contador]}" alt="">
+
+//     `
+//     contador++
+//     const cardsBody = document.createElement("div")
+//     cardsBody.classList.add("cards-body")
+//     cardsBody.innerHTML = `
+
+//         <h4 class="cards-titulo" >${element.nombre}</h4>
+
+//         <span class="fs-4" >$<span class="cards-precio" >${element.precio}</span></span>
+
+//     `
+//     const cardsContenedorButton = document.createElement("div")
+//     cardsContenedorButton.classList.add("cards-contenedor-button")
+//     cardsContenedorButton.innerHTML = `
+
+//     <input class="card-input" placeholder="Cantidad">
+
+//     <button class="cards-button" >COMPRAR</button>
+
+//     `
+
+//     cards.appendChild(cardsContenedorImagen)
+//     cards.appendChild(cardsBody)
+//     cards.appendChild(cardsContenedorButton)
+//     contenedorCards.appendChild(cards)
+
+// })
+
+const api = "https://fakestoreapi.com/products";
+
+const contenedorCards = document.querySelector(".contenedor-de-cards");
+
+fetch(api)
+  .then((response) => {
+    return response.json();
+  })
+  .then((info) => {
+    info.forEach((element) => {
+      const nombre = element.title;
+      const imagen = element.image;
+      const precio = element.price;
+
+      const cards = document.createElement("div");
+      cards.classList.add("cards");
+
+      const cardsContenedorImagen = document.createElement("div");
+      cardsContenedorImagen.classList.add("cards-contenedor-imagen");
+      cardsContenedorImagen.innerHTML = `
+            
+            <img class="cards-imagen" src="${imagen}" alt="">
 
 
-const misProductos = [producto1,producto2,producto3,producto4,producto5,producto6]
+            `;
 
-const imagenes = [
-    "imagenes/zapatillasnike.png",
-    "imagenes/buzoadidas.png",
-    "imagenes/pantalonpuma.png",
-    "imagenes/ojotasreebok.png",
-    "imagenes/pelotabasquet.png",
-    "imagenes/camperanba.png"
+      const cardsBody = document.createElement("div");
+      cardsBody.classList.add("cards-body");
+      cardsBody.innerHTML = `
+            
+                <h4 class="cards-titulo" >${nombre}</h4>
 
-]
-const contenedorCards = document.querySelector(".contenedor-de-cards")
+                <span class="fs-4" >$<span class="cards-precio" >${precio}</span></span>
 
-let contador = 0
+            `;
+      const cardsContenedorButton = document.createElement("div");
+      cardsContenedorButton.classList.add("cards-contenedor-button");
+      cardsContenedorButton.innerHTML = `
+            
+                
+            <input class="card-input" placeholder="Cantidad">
 
-misProductos.forEach((element)=>{
+            <button class="cards-button" >COMPRAR</button>
 
+            
+            `;
 
-    const cards = document.createElement("div")
-    cards.classList.add("cards")
+      cards.appendChild(cardsContenedorImagen);
+      cards.appendChild(cardsBody);
+      cards.appendChild(cardsContenedorButton);
+      contenedorCards.appendChild(cards);
+    });
 
-    const cardsContenedorImagen = document.createElement("div")
-    cardsContenedorImagen.classList.add("cards-contenedor-imagen")
-    cardsContenedorImagen.innerHTML = `
-    
-    <img class="cards-imagen" src="${imagenes[contador]}" alt="">
+    /* CARRITO */
 
+    const desplegar = document.querySelector(".carrito-desplegar");
 
-    `
-    contador++
-    const cardsBody = document.createElement("div")
-    cardsBody.classList.add("cards-body")
-    cardsBody.innerHTML = `
-    
-        <h4 class="cards-titulo" >${element.nombre}</h4>
+    let totalCarrito = 0;
 
-        <span class="fs-4" >$<span class="cards-precio" >${element.precio}</span></span>
+    const tituloCarrito = document.createElement("h1");
+    tituloCarrito.classList.add("text-center", "mt-3");
+    tituloCarrito.innerText = "CARRITO";
 
-    `
-    const cardsContenedorButton = document.createElement("div")
-    cardsContenedorButton.classList.add("cards-contenedor-button")
-    cardsContenedorButton.innerHTML = `
-    
-        
-    <input class="card-input" placeholder="Cantidad">
+    const agregandoTotalCarro = document.createElement("h5");
+    agregandoTotalCarro.classList.add("text-end", "m-3", "fs-2");
+    agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito}`;
 
-    <button class="cards-button" >COMPRAR</button>
+    const borrarCarro = document.createElement("button");
+    borrarCarro.classList.add("cards-delete");
+    borrarCarro.id = "borrarCarro";
+    borrarCarro.innerText = "DELETE";
 
-    
-    `
+    const comprarCarro = document.createElement("button");
+    comprarCarro.classList.add("cards-comprar-carro");
+    comprarCarro.id = "comprarCarro";
+    comprarCarro.innerText = "FINALIZAR COMPRA";
 
-    cards.appendChild(cardsContenedorImagen)
-    cards.appendChild(cardsBody)
-    cards.appendChild(cardsContenedorButton)
-    contenedorCards.appendChild(cards)
-
-    
-
-})
-
-
-
-/* CARRITO */
-
-const desplegar = document.querySelector(".carrito-desplegar")
-
-let totalCarrito = 0
-
-const tituloCarrito = document.createElement("h1")
-tituloCarrito.classList.add("text-center","mt-3")
-tituloCarrito.innerText = "CARRITO"
-
-const agregandoTotalCarro = document.createElement("h5")
-agregandoTotalCarro.classList.add("text-end","m-3","fs-2")
-agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito}`
-
-const borrarCarro = document.createElement("button")
-borrarCarro.classList.add("cards-delete");
-borrarCarro.id = "borrarCarro"
-borrarCarro.innerText="DELETE"
-
-const comprarCarro = document.createElement("button")
-comprarCarro.classList.add("cards-comprar-carro")
-comprarCarro.id="comprarCarro"
-comprarCarro.innerText="FINALIZAR COMPRA"
-
-const infoTotalCarrito = document.createElement("div")
-infoTotalCarrito.classList.add("info-total-carrito")
-infoTotalCarrito.innerHTML=`
+    const infoTotalCarrito = document.createElement("div");
+    infoTotalCarrito.classList.add("info-total-carrito");
+    infoTotalCarrito.innerHTML = `
     <span> PRODUCTO </span>
     <span> CANTIDAD </span>
     <span> PRECIO </span>
 
-`
+`;
+
+    desplegar.appendChild(tituloCarrito);
+    desplegar.appendChild(agregandoTotalCarro);
+    desplegar.appendChild(borrarCarro);
+    desplegar.appendChild(infoTotalCarrito);
+    desplegar.appendChild(comprarCarro);
+
+    const carrito = document.querySelector("#carrito");
+
+    const borrar = document.querySelector("#borrarCarro");
+
+    const compraDeCarro = document.querySelector("#comprarCarro");
+
+    const recuperarStorage = JSON.parse(localStorage.getItem("producto"));
 
 
+    if (recuperarStorage) {
+      let existentes = [];
+      const desplegar = document.querySelector(".carrito-desplegar");
 
-desplegar.appendChild(tituloCarrito)
-desplegar.appendChild(agregandoTotalCarro)
-desplegar.appendChild(borrarCarro)
-desplegar.appendChild(infoTotalCarrito)
-desplegar.appendChild(comprarCarro)
+      const carrito = document.querySelector("h5");
+      let total = 0;
 
+      for (let i = 0; i < recuperarStorage.length; i++) {
+        existentes.push(recuperarStorage[i].obtenerProducto);
 
-const carrito = document.querySelector("#carrito")
+        const nuevo = document.createElement("div");
+        nuevo.classList.add("infoCarrito");
 
-const borrar = document.querySelector("#borrarCarro")
-
-const compraDeCarro = document.querySelector("#comprarCarro")
-
-const recuperarStorage = JSON.parse(localStorage.getItem("producto"))
-
-
-if (recuperarStorage){
-    
-
-    let existentes = []
-    const desplegar = document.querySelector(".carrito-desplegar")
-    
-    const carrito = document.querySelector("h5")
-    let total = 0
-
-    for(let i = 0;i<recuperarStorage.length;i++){
-        existentes.push(recuperarStorage[i].obtenerProducto)
-        
-        const nuevo = document.createElement("div")
-        nuevo.classList.add("infoCarrito")
-    
-        nuevo.innerHTML =   `
+        nuevo.innerHTML = `
         <span class="producto" >${recuperarStorage[i].obtenerProducto}</span> 
         <span class="cantidad" >${recuperarStorage[i].cantidadStorage}</span>
         <span class="precio" >$${recuperarStorage[i].precioStorage}</span> 
     
-        `
-        desplegar.appendChild(nuevo)
-        total+=(parseInt(recuperarStorage[i].precioStorage))
-    }
+        `;
+        desplegar.appendChild(nuevo);
+        total += parseFloat(recuperarStorage[i].precioStorage);
+      }
 
-   carrito.innerText=`TOTAL: $${total}`
+      carrito.innerText = `TOTAL: $${total}`;
 
-   const cards = document.querySelectorAll(".cards")
-   cards.forEach((element)=>{
-    
-    const button = element.querySelector(".cards-button")
-    button.addEventListener("click",()=>{
-        const ingresoCantidad = element.querySelector("input")
-        if (ingresoCantidad.value){
+      const cards = document.querySelectorAll(".cards");
+      cards.forEach((element) => {
+        const button = element.querySelector(".cards-button");
+        button.addEventListener("click", () => {
+          const ingresoCantidad = element.querySelector("input");
+          if (ingresoCantidad.value) {
+            const producto = element.querySelector(".cards-titulo");
+            const obtenerProducto = producto.innerText;
 
-            const producto = element.querySelector(".cards-titulo")
-            const obtenerProducto = producto.innerText
+            const yaEnCarrito = existentes.find((e) => {
+              return e == obtenerProducto;
+            });
 
-            const yaEnCarrito = existentes.find((e)=>{
-                return e==obtenerProducto
-            })
+            if (!yaEnCarrito) {
+              existentes.push(obtenerProducto);
 
-        
-                if (!yaEnCarrito){
-                    existentes.push(obtenerProducto)
-                    
-        
-                    const precio = element.querySelector(".cards-precio")
-                    const obtenerPrecio = parseInt(precio.innerText)
-        
-        
-                    const cantidad = element.querySelector("input")
-                    const obtenerCantidad = parseInt(cantidad.value)
-        
-                    const mandarACarro = (obtenerPrecio*obtenerCantidad)
-                    
-                    const desplegar = document.querySelector(".carrito-desplegar")
-                    const agregarADesplegar = document.createElement("div")
-                    
-                    
-                    agregarADesplegar.classList.add("infoCarrito")
-        
-                    agregarADesplegar.innerHTML =   `
+              const precio = element.querySelector(".cards-precio");
+              const obtenerPrecio = parseFloat(precio.innerText);
+
+              const cantidad = element.querySelector("input");
+              const obtenerCantidad = parseFloat(cantidad.value);
+
+              const mandarACarro = obtenerPrecio * obtenerCantidad;
+
+              const desplegar = document.querySelector(".carrito-desplegar");
+              const agregarADesplegar = document.createElement("div");
+
+              agregarADesplegar.classList.add("infoCarrito");
+
+              agregarADesplegar.innerHTML = `
                     <span class="producto" >${obtenerProducto}</span> 
                     <span class="cantidad" >${cantidad.value}</span>
                     <span class="precio" >$${mandarACarro}</span> 
                         
-                    `
-                    desplegar.appendChild(agregarADesplegar)
-        
-        
-                    totalCarrito+=mandarACarro
-                    const h5 = desplegar.querySelector("h5")
-                    h5.innerHTML = `TOTAL: $${totalCarrito+total}`
+                    `;
+              desplegar.appendChild(agregarADesplegar);
 
-                    cantidadStorage=cantidad.value
-                    precioStorage=mandarACarro
-                    recuperarStorage.push({obtenerProducto,cantidadStorage,precioStorage})
-        
-    
-                    
-                    
-                }
+              totalCarrito += mandarACarro;
+              const h5 = desplegar.querySelector("h5");
+              h5.innerHTML = `TOTAL: $${totalCarrito + total}`;
 
-
-        
-                if (yaEnCarrito){
-                    const actualizar = document.querySelectorAll(".infoCarrito")
-        
-                    actualizar.forEach((e)=>{
-        
-                        const productoAAactulizar = e.querySelector(".producto")
-        
-                        if (productoAAactulizar.innerText==obtenerProducto){
-        
-                            const cantidadVieja = e.querySelector(".cantidad")
-                            const cantidadNueva = element.querySelector("input")
-        
-                            const cantidadAcumulada = parseInt(cantidadVieja.innerText) + parseInt(cantidadNueva.value)
-                            cantidadVieja.innerHTML = `${cantidadAcumulada}`
-        
-                            const precioCard = element.querySelector(".cards-precio")
-                            const precioNuevo = parseInt(precioCard.innerText)*cantidadAcumulada
-        
-                            const precioAcumulado = e.querySelector(".precio")
-                            precioAcumulado.innerText = `$${precioNuevo}`
-        
-                            const desplegar = document.querySelector(".carrito-desplegar")
-                            totalCarrito+=(parseInt(cantidadNueva.value)*parseInt(precioCard.innerText))
-                            const h5 = desplegar.querySelector("h5")
-                            h5.innerHTML = `TOTAL: $${totalCarrito+total}`
-
-                
-
-                            recuperarStorage.forEach((e)=>{
-                                if (e.obtenerProducto==obtenerProducto){
-                                    e.cantidadStorage=cantidadAcumulada
-                                    e.precioStorage=precioNuevo
-                                   
-
-                                }
-                            })
-
-                            localStorage.setItem("producto",JSON.stringify(recuperarStorage))
-
-                    
-        
-                           
-                         
-                        }
-                        
-                       
-                    })
-        
-                }
-
-                
-
-
+              cantidadStorage = cantidad.value;
+              precioStorage = mandarACarro;
+              recuperarStorage.push({
+                obtenerProducto,
+                cantidadStorage,
+                precioStorage,
+              });
             }
 
-        
-        
+            if (yaEnCarrito) {
+              const actualizar = document.querySelectorAll(".infoCarrito");
 
-        })
+              actualizar.forEach((e) => {
+                const productoAAactulizar = e.querySelector(".producto");
 
-    })
+                if (productoAAactulizar.innerText == obtenerProducto) {
+                  const cantidadVieja = e.querySelector(".cantidad");
+                  const cantidadNueva = element.querySelector("input");
 
-}
-   
+                  const cantidadAcumulada =
+                    parseFloat(cantidadVieja.innerText) +
+                    parseFloat(cantidadNueva.value);
+                  cantidadVieja.innerHTML = `${cantidadAcumulada}`;
 
+                  const precioCard = element.querySelector(".cards-precio");
+                  const precioNuevo =
+                    parseFloat(precioCard.innerText) * cantidadAcumulada;
 
+                  const precioAcumulado = e.querySelector(".precio");
+                  precioAcumulado.innerText = `$${precioNuevo}`;
 
-let datosStorage = []
-let existentes = []
+                  const desplegar =
+                    document.querySelector(".carrito-desplegar");
+                  totalCarrito +=
+                    parseFloat(cantidadNueva.value) *
+                    parseFloat(precioCard.innerText);
+                  const h5 = desplegar.querySelector("h5");
+                  h5.innerHTML = `TOTAL: $${totalCarrito + total}`;
 
+                  recuperarStorage.forEach((e) => {
+                    if (e.obtenerProducto == obtenerProducto) {
+                      e.cantidadStorage = cantidadAcumulada;
+                      e.precioStorage = precioNuevo;
+                    }
+                  });
 
-
-carrito.addEventListener("click",()=>{
-
-    const desplegar = document.querySelector(".carrito-desplegar")
-  
-    const active = document.querySelector(".active")
-
-
-    if (active){
-        desplegar.classList.remove("active")
-    }
-    else {
-        desplegar.classList.add("active")
-    
-    }
-
-
-    
-
-})
-
-compraDeCarro.addEventListener("click",()=>{
-
-    if(localStorage.getItem("producto")){
-
-        localStorage.removeItem("producto")
-    
-
-    const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito")
-    todosLosInfoCarrito.forEach((element)=>{
-        existentes.pop(element.querySelector(".producto"))
-        desplegar.removeChild(element)
-        
-
-
-    })
-    totalCarrito=0
-    const agregandoTotalCarro = desplegar.querySelector("h5")
-    agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito}`
-
-    desplegar.innerHTML = ""
-
-    const mensajeDeCompra = document.createElement("h3")
-    mensajeDeCompra.classList.add("felicitaciones")
-    mensajeDeCompra.innerText = "FELICITACIONES POR LA COMPRA"
-    desplegar.appendChild(mensajeDeCompra)
-    setTimeout(() => {
-        location.reload()
-      }, 2000);
-
-
+                  localStorage.setItem(
+                    "producto",
+                    JSON.stringify(recuperarStorage)
+                  );
+                }
+              });
+            }
+          }
+        });
+      });
     }
 
+    let datosStorage = [];
+    let existentes = [];
 
-})
+    carrito.addEventListener("click", () => {
+      const desplegar = document.querySelector(".carrito-desplegar");
 
+      const active = document.querySelector(".active");
 
+      if (active) {
+        desplegar.classList.remove("active");
+      } else {
+        desplegar.classList.add("active");
+      }
+    });
 
+    compraDeCarro.addEventListener("click", () => {
+      if (localStorage.getItem("producto")) {
+        localStorage.removeItem("producto");
 
-borrar.addEventListener("click",()=>{
+        const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito");
+        todosLosInfoCarrito.forEach((element) => {
+          existentes.pop(element.querySelector(".producto"));
+          desplegar.removeChild(element);
+        });
+        totalCarrito = 0;
+        const agregandoTotalCarro = desplegar.querySelector("h5");
+        agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito}`;
 
-    if(localStorage.getItem("producto")){
+        desplegar.innerHTML = "";
 
-        localStorage.removeItem("producto")
-        location.reload()
-    
-        const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito")
-        todosLosInfoCarrito.forEach((element)=>{
-            existentes.pop(element.querySelector(".producto"))
-            desplegar.removeChild(element)
-            
-    
-    
-        })
-        totalCarrito=0
-        const agregandoTotalCarro = desplegar.querySelector("h5")
-        agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito}`
-       
+        const mensajeDeCompra = document.createElement("h3");
+        mensajeDeCompra.classList.add("felicitaciones");
+        mensajeDeCompra.innerText = "FELICITACIONES POR LA COMPRA";
+        desplegar.appendChild(mensajeDeCompra);
+        setTimeout(() => {
+          location.reload();
+        }, 2000);
+      }
+    });
 
+    borrar.addEventListener("click", () => {
+      if (localStorage.getItem("producto")) {
+        localStorage.removeItem("producto");
+        location.reload();
 
+        const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito");
+        todosLosInfoCarrito.forEach((element) => {
+          existentes.pop(element.querySelector(".producto"));
+          desplegar.removeChild(element);
+        });
+        totalCarrito = 0;
+        const agregandoTotalCarro = desplegar.querySelector("h5");
+        agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito}`;
+      }
+    });
 
-    }
+    if (!recuperarStorage) {
+      /* PASANDO A CARRITO */
+      const cards = document.querySelectorAll(".cards");
 
+      cards.forEach((element) => {
+        let cantidadStorage = 0;
+        let precioStorage = 0;
 
-  
+        const button = element.querySelector(".cards-button");
+        button.addEventListener("click", () => {
+          const ingresoCantidad = element.querySelector("input");
 
-})
+          if (ingresoCantidad.value) {
+            const producto = element.querySelector(".cards-titulo");
+            const obtenerProducto = producto.innerText;
 
+            const yaEnCarrito = existentes.find((e) => {
+              return e == obtenerProducto;
+            });
 
+            if (!yaEnCarrito) {
+              existentes.push(obtenerProducto);
 
+              const precio = element.querySelector(".cards-precio");
+              const obtenerPrecio = parseFloat(precio.innerText);
 
-if(!recuperarStorage){
+              const cantidad = element.querySelector("input");
+              const obtenerCantidad = parseFloat(cantidad.value);
 
-/* PASANDO A CARRITO */
-const cards = document.querySelectorAll(".cards")
+              const mandarACarro = obtenerPrecio * obtenerCantidad;
 
-cards.forEach((element)=>{
+              const desplegar = document.querySelector(".carrito-desplegar");
+              const agregarADesplegar = document.createElement("div");
 
-    let cantidadStorage = 0
-    let precioStorage = 0
+              agregarADesplegar.classList.add("infoCarrito");
 
-    const button = element.querySelector(".cards-button")
-    button.addEventListener("click",()=>{
-
-        
-        const ingresoCantidad = element.querySelector("input")
-        
-        if (ingresoCantidad.value){
-
-            const producto = element.querySelector(".cards-titulo")
-            const obtenerProducto = producto.innerText
-
-   
-            const yaEnCarrito = existentes.find((e)=>{
-            return e==obtenerProducto
-            })
-         
-
-
-        if (!yaEnCarrito){
-            existentes.push(obtenerProducto)
-            
-
-            const precio = element.querySelector(".cards-precio")
-            const obtenerPrecio = parseInt(precio.innerText)
-
-
-            const cantidad = element.querySelector("input")
-            const obtenerCantidad = parseInt(cantidad.value)
-
-            const mandarACarro = (obtenerPrecio*obtenerCantidad)
-            
-            const desplegar = document.querySelector(".carrito-desplegar")
-            const agregarADesplegar = document.createElement("div")
-            
-            
-            agregarADesplegar.classList.add("infoCarrito")
-
-            agregarADesplegar.innerHTML =   `
+              agregarADesplegar.innerHTML = `
             <p class="producto" >${obtenerProducto}</p> 
             <p class="cantidad" >${cantidad.value}</p>
             <p class="precio" >$${mandarACarro}</p> 
                 
-            `
-            desplegar.appendChild(agregarADesplegar)
+            `;
+              desplegar.appendChild(agregarADesplegar);
 
+              totalCarrito += mandarACarro;
+              const h5 = desplegar.querySelector("h5");
+              h5.innerHTML = `TOTAL: $${totalCarrito}`;
 
-            totalCarrito+=mandarACarro
-            const h5 = desplegar.querySelector("h5")
-            h5.innerHTML = `TOTAL: $${totalCarrito}`
+              cantidadStorage = cantidad.value;
+              precioStorage = mandarACarro;
+              datosStorage.push({
+                obtenerProducto,
+                cantidadStorage,
+                precioStorage,
+              });
+            }
 
-            cantidadStorage=cantidad.value
-            precioStorage=mandarACarro
-            datosStorage.push({obtenerProducto,cantidadStorage,precioStorage})
-            
-        }
+            if (yaEnCarrito) {
+              const actualizar = document.querySelectorAll(".infoCarrito");
 
-        if (yaEnCarrito){
-            const actualizar = document.querySelectorAll(".infoCarrito")
+              actualizar.forEach((e) => {
+                const productoAAactulizar = e.querySelector(".producto");
 
-            actualizar.forEach((e)=>{
+                if (productoAAactulizar.innerText == obtenerProducto) {
+                  const cantidadVieja = e.querySelector(".cantidad");
+                  const cantidadNueva = element.querySelector("input");
 
-                const productoAAactulizar = e.querySelector(".producto")
+                  const cantidadAcumulada =
+                    parseFloat(cantidadVieja.innerText) +
+                    parseFloat(cantidadNueva.value);
+                  cantidadVieja.innerHTML = `${cantidadAcumulada}`;
 
-                if (productoAAactulizar.innerText==obtenerProducto){
+                  const precioCard = element.querySelector(".cards-precio");
+                  const precioNuevo =
+                    parseFloat(precioCard.innerText) * cantidadAcumulada;
 
-                    const cantidadVieja = e.querySelector(".cantidad")
-                    const cantidadNueva = element.querySelector("input")
+                  const precioAcumulado = e.querySelector(".precio");
+                  precioAcumulado.innerText = `$${precioNuevo}`;
 
-                    const cantidadAcumulada = parseInt(cantidadVieja.innerText) + parseInt(cantidadNueva.value)
-                    cantidadVieja.innerHTML = `${cantidadAcumulada}`
+                  const desplegar =
+                    document.querySelector(".carrito-desplegar");
+                  totalCarrito +=
+                    parseFloat(cantidadNueva.value) *
+                    parseFloat(precioCard.innerText);
+                  const h5 = desplegar.querySelector("h5");
+                  h5.innerHTML = `TOTAL: $${totalCarrito}`;
 
-                    const precioCard = element.querySelector(".cards-precio")
-                    const precioNuevo = parseInt(precioCard.innerText)*cantidadAcumulada
-
-                    const precioAcumulado = e.querySelector(".precio")
-                    precioAcumulado.innerText = `$${precioNuevo}`
-
-                    const desplegar = document.querySelector(".carrito-desplegar")
-                    totalCarrito+=(parseInt(cantidadNueva.value)*parseInt(precioCard.innerText))
-                    const h5 = desplegar.querySelector("h5")
-                    h5.innerHTML = `TOTAL: $${totalCarrito}`
-
-                    datosStorage.forEach((e)=>{
-                        if (e.obtenerProducto==obtenerProducto){
-                            e.cantidadStorage=cantidadAcumulada
-                            e.precioStorage=precioNuevo
-                           
-                        }
-                    })
-            
-                 
+                  datosStorage.forEach((e) => {
+                    if (e.obtenerProducto == obtenerProducto) {
+                      e.cantidadStorage = cantidadAcumulada;
+                      e.precioStorage = precioNuevo;
+                    }
+                  });
                 }
-                
-               
-            })
+              });
+            }
 
-        }
-
-        localStorage.setItem("producto",JSON.stringify(datosStorage))
-            
-        }
- 
-
-        
-
-    })
-
-})
-
-
-
-
-}
-
-
+            localStorage.setItem("producto", JSON.stringify(datosStorage));
+          }
+        });
+      });
+    }
+  });
