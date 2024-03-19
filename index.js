@@ -134,7 +134,7 @@ fetch(api)
 
     const agregandoTotalCarro = document.createElement("h5");
     agregandoTotalCarro.classList.add("text-end", "m-3", "fs-2");
-    agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito}`;
+    agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito.toFixed(2)}`;
 
     const borrarCarro = document.createElement("button");
     borrarCarro.classList.add("cards-delete");
@@ -186,14 +186,14 @@ fetch(api)
         nuevo.innerHTML = `
         <span class="producto" >${recuperarStorage[i].obtenerProducto}</span> 
         <span class="cantidad" >${recuperarStorage[i].cantidadStorage}</span>
-        <span class="precio" >$${recuperarStorage[i].precioStorage}</span> 
+        <span class="precio" >$${recuperarStorage[i].precioStorage.toFixed(2)}</span> 
     
         `;
         desplegar.appendChild(nuevo);
-        total += parseFloat(recuperarStorage[i].precioStorage);
+        total += parseFloat(recuperarStorage[i].precioStorage.toFixed(2));
       }
 
-      carrito.innerText = `TOTAL: $${total}`;
+      carrito.innerText = `TOTAL: $${total.toFixed(2)}`;
 
       const cards = document.querySelectorAll(".cards");
       cards.forEach((element) => {
@@ -227,14 +227,14 @@ fetch(api)
               agregarADesplegar.innerHTML = `
                     <span class="producto" >${obtenerProducto}</span> 
                     <span class="cantidad" >${cantidad.value}</span>
-                    <span class="precio" >$${mandarACarro}</span> 
+                    <span class="precio" >$${mandarACarro.toFixed(2)}</span> 
                         
                     `;
               desplegar.appendChild(agregarADesplegar);
 
               totalCarrito += mandarACarro;
               const h5 = desplegar.querySelector("h5");
-              h5.innerHTML = `TOTAL: $${totalCarrito + total}`;
+              h5.innerHTML = `TOTAL: $${(totalCarrito + total).toFixed(2)}`;
 
               cantidadStorage = cantidad.value;
               precioStorage = mandarACarro;
@@ -265,7 +265,7 @@ fetch(api)
                     parseFloat(precioCard.innerText) * cantidadAcumulada;
 
                   const precioAcumulado = e.querySelector(".precio");
-                  precioAcumulado.innerText = `$${precioNuevo}`;
+                  precioAcumulado.innerText = `$${precioNuevo.toFixed(2)}`;
 
                   const desplegar =
                     document.querySelector(".carrito-desplegar");
@@ -273,7 +273,7 @@ fetch(api)
                     parseFloat(cantidadNueva.value) *
                     parseFloat(precioCard.innerText);
                   const h5 = desplegar.querySelector("h5");
-                  h5.innerHTML = `TOTAL: $${totalCarrito + total}`;
+                  h5.innerHTML = `TOTAL: $${(totalCarrito + total).toFixed(2)}`;
 
                   recuperarStorage.forEach((e) => {
                     if (e.obtenerProducto == obtenerProducto) {
@@ -320,7 +320,7 @@ fetch(api)
         });
         totalCarrito = 0;
         const agregandoTotalCarro = desplegar.querySelector("h5");
-        agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito}`;
+        agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito.toFixed(2)}`;
 
         desplegar.innerHTML = "";
 
@@ -346,7 +346,7 @@ fetch(api)
         });
         totalCarrito = 0;
         const agregandoTotalCarro = desplegar.querySelector("h5");
-        agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito}`;
+        agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito.toFixed(2)}`;
       }
     });
 
@@ -389,14 +389,14 @@ fetch(api)
               agregarADesplegar.innerHTML = `
             <p class="producto" >${obtenerProducto}</p> 
             <p class="cantidad" >${cantidad.value}</p>
-            <p class="precio" >$${mandarACarro}</p> 
+            <p class="precio" >$${mandarACarro.toFixed(2)}</p> 
                 
             `;
               desplegar.appendChild(agregarADesplegar);
 
               totalCarrito += mandarACarro;
               const h5 = desplegar.querySelector("h5");
-              h5.innerHTML = `TOTAL: $${totalCarrito}`;
+              h5.innerHTML = `TOTAL: $${totalCarrito.toFixed(2)}`;
 
               cantidadStorage = cantidad.value;
               precioStorage = mandarACarro;
@@ -427,7 +427,7 @@ fetch(api)
                     parseFloat(precioCard.innerText) * cantidadAcumulada;
 
                   const precioAcumulado = e.querySelector(".precio");
-                  precioAcumulado.innerText = `$${precioNuevo}`;
+                  precioAcumulado.innerText = `$${precioNuevo.toFixed(2)}`;
 
                   const desplegar =
                     document.querySelector(".carrito-desplegar");
@@ -435,7 +435,7 @@ fetch(api)
                     parseFloat(cantidadNueva.value) *
                     parseFloat(precioCard.innerText);
                   const h5 = desplegar.querySelector("h5");
-                  h5.innerHTML = `TOTAL: $${totalCarrito}`;
+                  h5.innerHTML = `TOTAL: $${totalCarrito.toFixed(2)}`;
 
                   datosStorage.forEach((e) => {
                     if (e.obtenerProducto == obtenerProducto) {
