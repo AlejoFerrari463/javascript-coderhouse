@@ -384,17 +384,48 @@ fetch(api)
 
     borrar.addEventListener("click", () => {
       if (localStorage.getItem("producto")) {
-        localStorage.removeItem("producto");
-        location.reload();
+       
 
-        const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito");
-        todosLosInfoCarrito.forEach((element) => {
-          existentes.pop(element.querySelector(".producto"));
-          desplegar.removeChild(element);
+        // const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito");
+        // todosLosInfoCarrito.forEach((element) => {
+        //   existentes.pop(element.querySelector(".producto"));
+        //   desplegar.removeChild(element);
+        // });
+        // totalCarrito = 0;
+        // const agregandoTotalCarro = desplegar.querySelector("h5");
+        // agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito.toFixed(2)}`;
+
+        Swal.fire({
+          title: "Estas seguro?",
+          text: "No podras recuperar el contenido del carro",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Borrar",
+          cancelButtonText: "Cancelar"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: "Eliminado con exito!",
+              text: "Redirigiendo...",
+              icon: "success",
+              showConfirmButton: false,
+            });
+           const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito");
+          todosLosInfoCarrito.forEach((element) => {
+             existentes.pop(element.querySelector(".producto"));
+            desplegar.removeChild(element);
+           });
+           totalCarrito = 0;
+           const agregandoTotalCarro = desplegar.querySelector("h5");
+           agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito.toFixed(2)}`;
+            localStorage.removeItem("producto");
+            setTimeout(() => {
+              location.reload();
+            }, 2000);
+          }
         });
-        totalCarrito = 0;
-        const agregandoTotalCarro = desplegar.querySelector("h5");
-        agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito.toFixed(2)}`;
 
        
       }
