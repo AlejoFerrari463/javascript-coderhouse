@@ -1,15 +1,27 @@
+
 const main = document.querySelector("#main")
 moment.locale('es') 
-const fecha = moment().format('L');;
-const horas = moment().format('LT'); 
+const fecha = moment().add(23, 'days').calendar(); 
 
-const contenedorFecha = document.createElement("div")
-contenedorFecha.classList.add("contenedor-fecha")
-contenedorFecha.innerHTML = `
-    <div>${fecha}</div>
-    <div>${horas}</div>
-  `
-main.appendChild(contenedorFecha)
+
+
+Toastify({
+  text: `New products: ${fecha}`,
+  duration: 2000,
+  close: false,
+  gravity: "bottom", // `top` or `bottom`
+  position: "center", // `left`, `center` or `right`
+  stopOnFocus: true, // Prevents dismissing of toast on hover
+  style: {
+    background: "#FF5733",
+    color:"white",
+  },
+  onClick: function(){} // Callback after click
+}).showToast();
+
+
+
+
 
 const toogler = document.querySelector("#toogler")
 
@@ -30,10 +42,7 @@ if (localStorage.getItem("color")=="white"){
   const carrito = document.querySelector(".carrito-chango")
   carrito.style.color = "black"
 
-  const fecha = document.querySelector(".contenedor-fecha")
-  fecha.style.background = "black"
-  fecha.style.color = "white"
-
+ 
 
 }
 
@@ -62,10 +71,7 @@ toogler.addEventListener("click",()=>{
       const carrito = document.querySelector(".carrito-chango")
       carrito.style.color = "black"
 
-      const fecha = document.querySelector(".contenedor-fecha")
-      fecha.style.background = "black"
-      fecha.style.color = "white"
-
+     
 
 
     }
@@ -85,10 +91,6 @@ toogler.addEventListener("click",()=>{
 
       const carrito = document.querySelector(".carrito-chango")
       carrito.style.color = "white"
-
-      const fecha = document.querySelector(".contenedor-fecha")
-      fecha.style.background = "white"
-      fecha.style.color = "black"
 
 
    
@@ -385,15 +387,6 @@ fetch(api)
     borrar.addEventListener("click", () => {
       if (localStorage.getItem("producto")) {
        
-
-        // const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito");
-        // todosLosInfoCarrito.forEach((element) => {
-        //   existentes.pop(element.querySelector(".producto"));
-        //   desplegar.removeChild(element);
-        // });
-        // totalCarrito = 0;
-        // const agregandoTotalCarro = desplegar.querySelector("h5");
-        // agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito.toFixed(2)}`;
 
         Swal.fire({
           title: "Estas seguro?",
