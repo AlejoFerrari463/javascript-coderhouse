@@ -1,7 +1,3 @@
-
-
-const api = "https://fakestoreapi.com/products";
-
 const main = document.querySelector("#main")
 moment.locale('es') 
 const fecha = moment().format('L');;
@@ -14,6 +10,105 @@ contenedorFecha.innerHTML = `
     <div>${horas}</div>
   `
 main.appendChild(contenedorFecha)
+
+const toogler = document.querySelector("#toogler")
+
+
+if (localStorage.getItem("color")=="white"){
+
+
+  document.body.classList.replace("dark","light")
+  document.body.style.background = "white"
+  const active = document.querySelector(".toogler-punto")
+  active.classList.add("activar")
+  active.style.transition = "0.4s left";
+  active.style.background = "white"
+
+  const tooglerFondo = document.querySelector(".toogler-contenedor")
+  tooglerFondo.style.background = "black"
+
+  const carrito = document.querySelector(".carrito-chango")
+  carrito.style.color = "black"
+
+  const fecha = document.querySelector(".contenedor-fecha")
+  fecha.style.background = "black"
+  fecha.style.color = "white"
+
+
+}
+
+
+
+
+
+toogler.addEventListener("click",()=>{
+
+    const body = document.querySelector(".dark")
+    
+    if (body){
+
+      localStorage.setItem("color","white")
+
+      document.body.classList.replace("dark","light")
+      document.body.style.background = "white"
+      const active = document.querySelector(".toogler-punto")
+      active.classList.add("activar")
+      active.style.transition = "0.4s left";
+      active.style.background = "white"
+
+      const tooglerFondo = document.querySelector(".toogler-contenedor")
+      tooglerFondo.style.background = "black"
+
+      const carrito = document.querySelector(".carrito-chango")
+      carrito.style.color = "black"
+
+      const fecha = document.querySelector(".contenedor-fecha")
+      fecha.style.background = "black"
+      fecha.style.color = "white"
+
+
+
+    }
+    else {
+
+      localStorage.setItem("color","black")
+     
+      document.body.classList.replace("light","dark")
+      document.body.style.background = "black"
+      const active = document.querySelector(".toogler-punto")
+      active.classList.remove("activar")
+      active.style.transition = "0.4s left";
+      active.style.background = "black"
+
+      const tooglerFondo = document.querySelector(".toogler-contenedor")
+      tooglerFondo.style.background = "white"
+
+      const carrito = document.querySelector(".carrito-chango")
+      carrito.style.color = "white"
+
+      const fecha = document.querySelector(".contenedor-fecha")
+      fecha.style.background = "white"
+      fecha.style.color = "black"
+
+
+   
+
+    }
+
+})
+
+
+
+
+
+
+
+
+
+
+const api = "https://fakestoreapi.com/products";
+
+
 
 const contenedorCards = document.querySelector(".contenedor-de-cards");
 
@@ -275,7 +370,7 @@ fetch(api)
             clearInterval(timerInterval);
           }
         }).then((result) => {
-          /* Read more about handling dismissals below */
+       
           if (result.dismiss === Swal.DismissReason.timer) {
             console.log("I was closed by the timer");
           }
@@ -289,28 +384,17 @@ fetch(api)
 
     borrar.addEventListener("click", () => {
       if (localStorage.getItem("producto")) {
-       
-        Swal.fire({
-          title: "Seguro deseas eliminar los productos en el carro?",
-          showDenyButton: true,
-          showCancelButton: true,
-          showConfirmButton: false,
-          denyButtonText: `Borrar`
-        }).then((result) => {
-         if (result.isDenied) {
-            Swal.fire("PRODUCTOS ELIMINADOS", "", "info");
-            localStorage.removeItem("producto");
-            const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito");
-            todosLosInfoCarrito.forEach((element) => {
-              existentes.pop(element.querySelector(".producto"));
-              desplegar.removeChild(element);
-            });
-            totalCarrito = 0;
-            const agregandoTotalCarro = desplegar.querySelector("h5");
-            agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito.toFixed(2)}`;
-            
-          }
+        localStorage.removeItem("producto");
+        location.reload();
+
+        const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito");
+        todosLosInfoCarrito.forEach((element) => {
+          existentes.pop(element.querySelector(".producto"));
+          desplegar.removeChild(element);
         });
+        totalCarrito = 0;
+        const agregandoTotalCarro = desplegar.querySelector("h5");
+        agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito.toFixed(2)}`;
 
        
       }

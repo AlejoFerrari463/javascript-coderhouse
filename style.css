@@ -15,7 +15,7 @@ body {
 
 h1 {
 
-    color: #23714D;
+    color: #FF5733;
 
 
 }
@@ -219,12 +219,13 @@ h1 {
 /* CARRITO */
 
 
+
 /* FECHA */
 
 .contenedor-fecha {
 
-    position: absolute;
-    top: 10px;
+    position: fixed;
+    bottom: 10px;
     left: 10px;
     width: 120px;
     height:90px;
@@ -236,8 +237,45 @@ h1 {
     align-content: center;
     font-size: large;
     font-weight: bold;
+    color: black;
+}
+/* FECHA */
+
+
+/* TOOGLER */
+
+.toogler-contenedor {
+
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    top: 10px;
+    left: 10px;
+    background-color: white;
+    cursor: pointer;
+
 }
 
+.toogler-punto{
+
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    top: 10px;
+    left: 5px;
+    background-color: black;
+
+    
+
+}
+
+.activar{
+    left: 75px;
+    
+ 
+}
 
 /* MEDIAS */
 
