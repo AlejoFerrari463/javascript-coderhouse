@@ -219,6 +219,26 @@ h1 {
 /* CARRITO */
 
 
+/* FECHA */
+
+.contenedor-fecha {
+
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 120px;
+    height:90px;
+    background-color: white;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-content: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+
 /* MEDIAS */
 
 @media screen and (max-width: 992px) {

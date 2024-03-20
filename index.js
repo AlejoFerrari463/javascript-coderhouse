@@ -1,75 +1,19 @@
-// /* CREANDO CARDS */
-// class producto {
-//    constructor(nombre,precio){
-//     this.nombre = nombre,
-//     this.precio = precio
-//    }
 
-// }
-
-// const producto1 = new producto("Zapatillas Nike",135000)
-
-// const producto2 = new producto("Buzo Adidas",50000)
-
-// const producto3 = new producto("Pantalon Puma",15000)
-
-// const producto4 = new producto("Ojotas Reebok",5000)
-
-// const producto5 = new producto("Pelota Spalding",45000)
-
-// const producto6 = new producto("NBA Retro",300000)
-
-// const misProductos = [producto1,producto2,producto3,producto4,producto5,producto6]
-
-// const imagenes = [
-//     "imagenes/zapatillasnike.png",
-//     "imagenes/buzoadidas.png",
-//     "imagenes/pantalonpuma.png",
-//     "imagenes/ojotasreebok.png",
-//     "imagenes/pelotabasquet.png",
-//     "imagenes/camperanba.png"
-// ]
-
-// misProductos.forEach((element)=>{
-
-//     const cards = document.createElement("div")
-//     cards.classList.add("cards")
-
-//     const cardsContenedorImagen = document.createElement("div")
-//     cardsContenedorImagen.classList.add("cards-contenedor-imagen")
-//     cardsContenedorImagen.innerHTML = `
-
-//     <img class="cards-imagen" src="${imagenes[contador]}" alt="">
-
-//     `
-//     contador++
-//     const cardsBody = document.createElement("div")
-//     cardsBody.classList.add("cards-body")
-//     cardsBody.innerHTML = `
-
-//         <h4 class="cards-titulo" >${element.nombre}</h4>
-
-//         <span class="fs-4" >$<span class="cards-precio" >${element.precio}</span></span>
-
-//     `
-//     const cardsContenedorButton = document.createElement("div")
-//     cardsContenedorButton.classList.add("cards-contenedor-button")
-//     cardsContenedorButton.innerHTML = `
-
-//     <input class="card-input" placeholder="Cantidad">
-
-//     <button class="cards-button" >COMPRAR</button>
-
-//     `
-
-//     cards.appendChild(cardsContenedorImagen)
-//     cards.appendChild(cardsBody)
-//     cards.appendChild(cardsContenedorButton)
-//     contenedorCards.appendChild(cards)
-
-// })
 
 const api = "https://fakestoreapi.com/products";
+
+const main = document.querySelector("#main")
+moment.locale('es') 
+const fecha = moment().format('L');;
+const horas = moment().format('LT'); 
+
+const contenedorFecha = document.createElement("div")
+contenedorFecha.classList.add("contenedor-fecha")
+contenedorFecha.innerHTML = `
+    <div>${fecha}</div>
+    <div>${horas}</div>
+  `
+main.appendChild(contenedorFecha)
 
 const contenedorCards = document.querySelector(".contenedor-de-cards");
 
@@ -313,40 +257,62 @@ fetch(api)
       if (localStorage.getItem("producto")) {
         localStorage.removeItem("producto");
 
-        const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito");
-        todosLosInfoCarrito.forEach((element) => {
-          existentes.pop(element.querySelector(".producto"));
-          desplegar.removeChild(element);
+    
+
+        let timerInterval;
+        Swal.fire({
+          title: "FELICITACIONES POR TU COMPRA!",
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            const timer = Swal.getPopup().querySelector("b");
+            timerInterval = setInterval(() => {
+              timer.textContent = `${Swal.getTimerLeft()}`;
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          }
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log("I was closed by the timer");
+          }
         });
-        totalCarrito = 0;
-        const agregandoTotalCarro = desplegar.querySelector("h5");
-        agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito.toFixed(2)}`;
-
-        desplegar.innerHTML = "";
-
-        const mensajeDeCompra = document.createElement("h3");
-        mensajeDeCompra.classList.add("felicitaciones");
-        mensajeDeCompra.innerText = "FELICITACIONES POR LA COMPRA";
-        desplegar.appendChild(mensajeDeCompra);
+        
         setTimeout(() => {
           location.reload();
-        }, 2000);
+        }, 3000);
       }
     });
 
     borrar.addEventListener("click", () => {
       if (localStorage.getItem("producto")) {
-        localStorage.removeItem("producto");
-        location.reload();
-
-        const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito");
-        todosLosInfoCarrito.forEach((element) => {
-          existentes.pop(element.querySelector(".producto"));
-          desplegar.removeChild(element);
+       
+        Swal.fire({
+          title: "Seguro deseas eliminar los productos en el carro?",
+          showDenyButton: true,
+          showCancelButton: true,
+          showConfirmButton: false,
+          denyButtonText: `Borrar`
+        }).then((result) => {
+         if (result.isDenied) {
+            Swal.fire("PRODUCTOS ELIMINADOS", "", "info");
+            localStorage.removeItem("producto");
+            const todosLosInfoCarrito = document.querySelectorAll(".infoCarrito");
+            todosLosInfoCarrito.forEach((element) => {
+              existentes.pop(element.querySelector(".producto"));
+              desplegar.removeChild(element);
+            });
+            totalCarrito = 0;
+            const agregandoTotalCarro = desplegar.querySelector("h5");
+            agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito.toFixed(2)}`;
+            
+          }
         });
-        totalCarrito = 0;
-        const agregandoTotalCarro = desplegar.querySelector("h5");
-        agregandoTotalCarro.innerText = `TOTAL: $${totalCarrito.toFixed(2)}`;
+
+       
       }
     });
 
