@@ -1,30 +1,24 @@
-
 const main = document.querySelector("#main")
+
 moment.locale('es') 
 const fecha = moment().add(23, 'days').calendar(); 
-
-
 
 Toastify({
   text: `New products: ${fecha}`,
   duration: 2000,
   close: false,
-  gravity: "bottom", // `top` or `bottom`
-  position: "center", // `left`, `center` or `right`
-  stopOnFocus: true, // Prevents dismissing of toast on hover
+  gravity: "bottom", 
+  position: "center", 
+  stopOnFocus: true, 
   style: {
     background: "#FF5733",
     color:"white",
   },
-  onClick: function(){} // Callback after click
+  onClick: function(){} 
+
 }).showToast();
 
-
-
-
-
 const toogler = document.querySelector("#toogler")
-
 
 if (localStorage.getItem("color")=="white"){
 
@@ -45,9 +39,6 @@ if (localStorage.getItem("color")=="white"){
  
 
 }
-
-
-
 
 
 toogler.addEventListener("click",()=>{
@@ -71,9 +62,6 @@ toogler.addEventListener("click",()=>{
       const carrito = document.querySelector(".carrito-chango")
       carrito.style.color = "black"
 
-     
-
-
     }
     else {
 
@@ -92,25 +80,12 @@ toogler.addEventListener("click",()=>{
       const carrito = document.querySelector(".carrito-chango")
       carrito.style.color = "white"
 
-
-   
-
     }
 
 })
 
 
-
-
-
-
-
-
-
-
 const api = "https://fakestoreapi.com/products";
-
-
 
 const contenedorCards = document.querySelector(".contenedor-de-cards");
 
@@ -120,9 +95,8 @@ fetch(api)
   })
   .then((info) => {
     info.forEach((element) => {
-      const nombre = element.title;
-      const imagen = element.image;
-      const precio = element.price;
+    
+      const {title: nombre,image: imagen,price: precio} = element
 
       const cards = document.createElement("div");
       cards.classList.add("cards");
@@ -363,10 +337,6 @@ fetch(api)
           timerProgressBar: true,
           didOpen: () => {
             Swal.showLoading();
-            const timer = Swal.getPopup().querySelector("b");
-            timerInterval = setInterval(() => {
-              timer.textContent = `${Swal.getTimerLeft()}`;
-            }, 100);
           },
           willClose: () => {
             clearInterval(timerInterval);
